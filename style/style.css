@@ -1,0 +1,285 @@
+@charset "UTF-8";
+body {
+  counter-reset: chapterCnt;
+  /* reset 0 */
+  padding-top: 54px;
+  /* 固定ヘッダーの高さ */
+  font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', 'ヒラギノ角ゴ Pro W3', 'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', '游ゴシック', 'Yu Gothic', 'ＭＳ Ｐゴシック', sans-serif;
+}
+
+body.now-drag {
+  cursor: col-resize;
+}
+
+body.now-drag.drag-limit-right {
+  cursor: w-resize;
+}
+
+body.now-drag.drag-limit-left {
+  cursor: e-resize;
+}
+
+header h1 {
+  margin-top: 0;
+  font-size: 24px;
+  text-align: center;
+  background-color: #e0e0e0;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 54px;
+  line-height: 54px;
+  z-index: 1;
+}
+
+/**** ハンバーガーメニュー ***********************/
+.hamburger-menu {
+  /* チェック時のハンバーガーメニューアイコン動作 */
+}
+
+.hamburger-menu #openSidebarMenu {
+  display: none;
+  /* ラベルは消しておく */
+}
+
+.hamburger-menu .sidebarIconToggle {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+  position: fixed;
+  z-index: 2;
+  height: 100%;
+  width: 100%;
+  top: 25px;
+  right: 15px;
+  height: 22px;
+  width: 22px;
+}
+
+.hamburger-menu .sidebarIconToggle .spinner {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+}
+
+.hamburger-menu .sidebarIconToggle .horizontal {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+
+.hamburger-menu .sidebarIconToggle .diagonal.part-1 {
+  position: relative;
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  float: left;
+}
+
+.hamburger-menu .sidebarIconToggle .diagonal.part-2 {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+
+.hamburger-menu input[type='checkbox']:checked {
+  /* サイドメニュー出現 */
+}
+
+.hamburger-menu input[type='checkbox']:checked ~ .sidebarIconToggle .horizontal {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  opacity: 0;
+}
+
+.hamburger-menu input[type='checkbox']:checked ~ .sidebarIconToggle .diagonal.part-1 {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transform: rotate(135deg);
+          transform: rotate(135deg);
+  margin-top: 8px;
+}
+
+.hamburger-menu input[type='checkbox']:checked ~ .sidebarIconToggle .diagonal.part-2 {
+  -webkit-transition: all 0.3s;
+  transition: all 0.3s;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  -webkit-transform: rotate(-135deg);
+          transform: rotate(-135deg);
+  margin-top: -9px;
+}
+
+.hamburger-menu .sidemenu-content {
+  position: fixed;
+  top: 54px;
+  right: 0;
+  width: 200px;
+  height: 100%;
+  border-top: 1px solid #c0c0c0;
+  background-color: #e0e0e0;
+  -webkit-transform: translateX(200px);
+          transform: translateX(200px);
+  -webkit-transition: -webkit-transform 0.25s ease-in-out;
+  transition: -webkit-transform 0.25s ease-in-out;
+  transition: transform 0.25s ease-in-out;
+  transition: transform 0.25s ease-in-out, -webkit-transform 0.25s ease-in-out;
+  z-index: 2;
+  background: -webkit-gradient(linear, left top, left bottom, from(#e0e0e0), to(#c2cbf0));
+  background: linear-gradient(180deg, #e0e0e0 0%, #c2cbf0 100%);
+  white-space: nowrap;
+  /* overflow-x: scroll; */
+}
+
+.hamburger-menu .sidemenu-content li {
+  line-height: 1.7em;
+}
+
+.hamburger-menu .sidemenu-content ul.toc-h3 {
+  padding-left: 20px;
+  list-style-type: none;
+}
+
+.hamburger-menu .sidemenu-content ul.toc-h4 {
+  list-style-type: none;
+}
+
+.hamburger-menu .sidemenu-content a {
+  color: #202020;
+  text-decoration: none;
+  -webkit-transition: color 0.2s;
+  transition: color 0.2s;
+}
+
+.hamburger-menu .sidemenu-content a:visited {
+  color: inherit;
+}
+
+.hamburger-menu .sidemenu-content a:hover {
+  color: #ff7043;
+}
+
+.hamburger-menu .sidemenu-content #toc-gen {
+  /* 第1階層 */
+  /* 第2階層以降 */
+}
+
+.hamburger-menu .sidemenu-content #toc-gen ul {
+  counter-reset: menuListCnt;
+}
+
+.hamburger-menu .sidemenu-content #toc-gen li {
+  counter-increment: menuListCnt;
+}
+
+.hamburger-menu .sidemenu-content #toc-gen > ul > li > a::before {
+  content: counter(menuListCnt) ". ";
+}
+
+.hamburger-menu .sidemenu-content #toc-gen > ul > li > ul a::before {
+  content: counters(menuListCnt, ".") ". ";
+}
+
+.hamburger-menu .sidemenu-content .devide-line {
+  position: absolute;
+  top: 0;
+  left: -1px;
+  width: 4px;
+  height: 100%;
+  -webkit-transition: background-color 0.3s;
+  transition: background-color 0.3s;
+  cursor: col-resize;
+}
+
+.hamburger-menu .sidemenu-content .devide-line:hover, .hamburger-menu .sidemenu-content .devide-line.now-drag {
+  background-color: #3170b9;
+}
+
+/**** main(本文)の目次 ***********************/
+main {
+  padding: 10px 30px;
+  -webkit-box-sizing: border-box;
+          box-sizing: border-box;
+  /* このクラスはメニューのON/OFFで動的に付加される */
+  /* このクラスはJSで付加される */
+}
+
+main p {
+  line-height: 1.5em;
+}
+
+main h2.chapter {
+  position: relative;
+  padding: 0.25em 0;
+  counter-reset: subChapCnt;
+}
+
+main h2.chapter::after {
+  content: '';
+  display: block;
+  height: 4px;
+  background: -webkit-gradient(linear, left top, right top, from(#7a7979), to(transparent));
+  background: linear-gradient(to right, #7a7979, transparent);
+}
+
+main h2.chapter::before {
+  counter-increment: chapterCnt;
+  content: counter(chapterCnt) ". ";
+}
+
+main h2.chapter:nth-child(n + 2) {
+  margin-top: 40px;
+}
+
+main h3.chapter {
+  position: relative;
+  padding: 0.25em 0;
+  margin-top: 30px;
+}
+
+main h3.chapter::after {
+  content: '';
+  width: 70%;
+  display: block;
+  height: 2px;
+  background: -webkit-gradient(linear, left top, right top, from(#7a7979), to(transparent));
+  background: linear-gradient(to right, #7a7979, transparent);
+}
+
+main h3.chapter::before {
+  counter-increment: subChapCnt;
+  content: counter(chapterCnt) "." counter(subChapCnt) ". ";
+}
+
+main .fig-annotation {
+  font-size: 15px;
+}
+
+main .fig-wapper {
+  display: inline-block;
+  text-align: center;
+  margin-bottom: 15px;
+}
+/*# sourceMappingURL=style.css.map */

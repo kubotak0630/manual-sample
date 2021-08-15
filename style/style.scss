@@ -1,0 +1,253 @@
+body {
+  counter-reset: chapterCnt; /* reset 0 */
+  padding-top: 54px; /* 固定ヘッダーの高さ */
+  font-family: 'Avenir', 'Helvetica Neue', 'Helvetica', 'Arial', 'ヒラギノ角ゴ Pro W3',
+    'Hiragino Kaku Gothic Pro', 'メイリオ', 'Meiryo', '游ゴシック', 'Yu Gothic', 'ＭＳ Ｐゴシック',
+    sans-serif;
+  // sideMenuの幅をドラッグ中のカーソル
+  &.now-drag {
+    cursor: col-resize;
+    &.drag-limit-right {
+      cursor: w-resize;
+    }
+    &.drag-limit-left {
+      cursor: e-resize;
+    }
+  }
+}
+
+header {
+  h1 {
+    margin-top: 0;
+    font-size: 24px;
+    text-align: center;
+    background-color: #e0e0e0;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 54px;
+    line-height: 54px;
+    z-index: 1;
+  }
+}
+
+/**** ハンバーガーメニュー ***********************/
+.hamburger-menu {
+  #openSidebarMenu {
+    display: none; /* ラベルは消しておく */
+  }
+
+  .sidebarIconToggle {
+    transition: all 0.3s;
+    box-sizing: border-box;
+    cursor: pointer;
+    position: absolute;
+    position: fixed;
+    z-index: 2;
+    height: 100%;
+    width: 100%;
+    top: 25px;
+    right: 15px;
+    height: 22px;
+    width: 22px;
+
+    .spinner {
+      transition: all 0.3s;
+      box-sizing: border-box;
+      position: absolute;
+      height: 3px;
+      width: 100%;
+      background-color: #fff;
+    }
+    .horizontal {
+      transition: all 0.3s;
+      box-sizing: border-box;
+      position: relative;
+      float: left;
+      margin-top: 3px;
+    }
+    .diagonal.part-1 {
+      position: relative;
+      transition: all 0.3s;
+      box-sizing: border-box;
+      float: left;
+    }
+    .diagonal.part-2 {
+      transition: all 0.3s;
+      box-sizing: border-box;
+      position: relative;
+      float: left;
+      margin-top: 3px;
+    }
+  }
+
+  /* チェック時のハンバーガーメニューアイコン動作 */
+  input[type='checkbox']:checked {
+    & ~ .sidebarIconToggle {
+      .horizontal {
+        transition: all 0.3s;
+        box-sizing: border-box;
+        opacity: 0;
+      }
+      .diagonal.part-1 {
+        transition: all 0.3s;
+        box-sizing: border-box;
+        transform: rotate(135deg);
+        margin-top: 8px;
+      }
+      .diagonal.part-2 {
+        transition: all 0.3s;
+        box-sizing: border-box;
+        transform: rotate(-135deg);
+        margin-top: -9px;
+      }
+    }
+
+    /* サイドメニュー出現 */
+    // & ~ .sidemenu-content {
+    //   transform: translateX(0px);
+    // }
+  }
+
+  // 自動生成されるサイドメニューコンテンツ
+  .sidemenu-content {
+    position: fixed;
+    top: 54px;
+    right: 0;
+    width: 200px;
+    height: 100%;
+    border-top: 1px solid #c0c0c0;
+    background-color: #e0e0e0;
+    transform: translateX(200px);
+    transition: transform 0.25s ease-in-out;
+    z-index: 2;
+    background: linear-gradient(180deg, #e0e0e0 0%, #c2cbf0 100%);
+    white-space: nowrap;
+    /* overflow-x: scroll; */
+
+    li {
+      line-height: 1.7em;
+    }
+
+    ul {
+      &.toc-h3 {
+        padding-left: 20px;
+        list-style-type: none;
+      }
+      &.toc-h4 {
+        list-style-type: none;
+      }
+    }
+    a {
+      color: #202020;
+      text-decoration: none;
+      transition: color 0.2s;
+
+      &:visited {
+        color: inherit;
+      }
+      &:hover {
+        color: #ff7043;
+      }
+    }
+
+    // 自動作成したサブメニューに番号を降る
+    // それぞれのul要素にカウンターの新しいインスタンスを生成(入れ子対応)
+    #toc-gen {
+      ul {
+        counter-reset: menuListCnt;
+      }
+      li {
+        counter-increment: menuListCnt;
+      }
+      /* 第1階層 */
+      & > ul > li > a::before {
+        content: counter(menuListCnt) '. ';
+      }
+      /* 第2階層以降 */
+      & > ul > li > ul a::before {
+        content: counters(menuListCnt, '.') '. ';
+      }
+    }
+    .devide-line {
+      position: absolute;
+      top: 0;
+      left: -1px;
+      width: 4px;
+      height: 100%;
+      transition: background-color 0.3s;
+      cursor: col-resize;
+      &:hover,
+      &.now-drag {
+        background-color: #3170b9;
+      }
+    }
+  }
+}
+
+/**** main(本文)の目次 ***********************/
+main {
+  padding: 10px 30px;
+  box-sizing: border-box;
+
+  p {
+    line-height: 1.5em;
+  }
+
+  /* このクラスはメニューのON/OFFで動的に付加される */
+  //   &.sidemenu-on {
+  //     width: -webkit-calc(100% - 200px);
+  //     width: calc(100% - 200px);
+  //   }
+
+  h2.chapter {
+    position: relative;
+    padding: 0.25em 0;
+    counter-reset: subChapCnt;
+
+    &::after {
+      content: '';
+      display: block;
+      height: 4px;
+      background: -webkit-linear-gradient(to right, rgb(122, 121, 121), transparent);
+      background: linear-gradient(to right, rgb(122, 121, 121), transparent);
+    }
+    &::before {
+      counter-increment: chapterCnt;
+      content: counter(chapterCnt) '. ';
+    }
+    &:nth-child(n + 2) {
+      margin-top: 40px;
+    }
+  }
+  h3.chapter {
+    position: relative;
+    padding: 0.25em 0;
+    margin-top: 30px;
+
+    &::after {
+      content: '';
+      width: 70%;
+      display: block;
+      height: 2px;
+      background: -webkit-linear-gradient(to right, rgb(223, 187, 187), transparent);
+      background: linear-gradient(to right, rgb(122, 121, 121), transparent);
+    }
+    &::before {
+      counter-increment: subChapCnt;
+      content: counter(chapterCnt) '.' counter(subChapCnt) '. ';
+    }
+  }
+  // 図の下に挿入する図Noのフォントサイズ
+  .fig-annotation {
+    font-size: 15px;
+  }
+
+  /* このクラスはJSで付加される */
+  .fig-wapper {
+    display: inline-block;
+    text-align: center;
+    margin-bottom: 15px;
+  }
+}
