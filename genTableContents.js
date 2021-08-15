@@ -27,7 +27,6 @@ const setAnkerLinkbyOffset = (offsetY, isSmooth) => {
   // NodeListOf<Element>はforEachが使えるので変換する必要はないは安全のため変換
   // const anchorLinksArr = Array.prototype.slice.call(anchorLinks); //配列風オブジェクトを配列に変換するメジャーな書き方
 
-  // console.log(anchorLinksArr);
   const behavior = isSmooth ? 'smooth' : 'auto';
   anchorLinks.forEach((link) => {
     link.addEventListener('click', (e) => {
