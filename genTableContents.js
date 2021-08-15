@@ -52,7 +52,6 @@ const setAnkerLinkbyOffset = (offsetY, isSmooth) => {
  *   <div class="fig-annotation">figx-x. aaa</div>    //fig番号を追加
  * </div>
  *
- *
  */
 const insertFigAnnotation = () => {
   // const elements = document.querySelectorAll('.main img, ');
